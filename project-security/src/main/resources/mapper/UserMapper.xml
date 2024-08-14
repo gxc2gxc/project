@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuchen.project.security.mapper.UserMapper">
+    <select id="selectAuthoritiesByUserId" resultType="java.lang.String">
+        select distinct permission_name
+        from tb_security_user_role tsur
+                 left join tb_security_role tsr on tsur.role_id = tsr.role_id
+                 left join tb_security_role_permission tsrp on tsr.role_id = tsrp.role_id
+                 left join tb_security_permission tsp on tsrp.permission_id = tsp.permission_id
+        where user_id = #{userId}
+          and tsr.status = 1
+          and tsp.status = 1
+    </select>
+</mapper>

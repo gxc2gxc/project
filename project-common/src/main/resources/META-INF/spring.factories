@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.xuchen.project.common.config.FeignConfig, \
+  com.xuchen.project.common.config.WebMvcConfig, \
+  com.xuchen.project.common.handler.FieldFillHandler, \
+  com.xuchen.project.common.handler.ExceptionHandler

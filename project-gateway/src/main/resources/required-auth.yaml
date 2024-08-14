@@ -1,0 +1,13 @@
+project:
+  security:
+    required-auth-urls:
+      - /security/permission/**=hasAdmin
+      - /security/role/**=hasAdmin
+      - /security/user/insert=hasAdmin
+      - /security/user/delete=hasAdmin
+      - /security/user/update=hasAdmin,hasCustom,hasMerchant
+      - /security/user/select=hasAdmin
+      - /security/user/bindingRole=hasAdmin
+      - /security/user/login=
+      - /security/user/verify=
+      - /security/user/logout=hasAdmin,hasCustom,hasMerchant

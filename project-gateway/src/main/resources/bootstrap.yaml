@@ -1,0 +1,22 @@
+server:
+  port: 52800
+spring:
+  application:
+    name: project-gateway
+  profiles:
+    active: dev
+  config:
+    import: classpath:required-auth.yaml
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.200.130:8848
+      config:
+        server-addr: 192.168.200.130:8848
+        file-extension: yaml
+    gateway:
+      routes:
+        - id: project-security
+          uri: lb://project-security
+          predicates:
+            - Path=/security/**
