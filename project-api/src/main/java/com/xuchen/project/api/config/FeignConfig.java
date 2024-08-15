@@ -1,5 +1,7 @@
-package com.xuchen.project.common.config;
+package com.xuchen.project.api.config;
 
+import com.xuchen.project.api.delay.fallback.WorkClientFallback;
+import com.xuchen.project.api.security.fallback.SecurityClientFallback;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
@@ -16,5 +18,15 @@ public class FeignConfig {
     @ConditionalOnMissingBean
     public HttpMessageConverters messageConverters(ObjectProvider<HttpMessageConverter<?>> converters) {
         return new HttpMessageConverters(converters.orderedStream().collect(Collectors.toList()));
+    }
+
+    @Bean
+    public WorkClientFallback workClientFallback() {
+        return new WorkClientFallback();
+    }
+
+    @Bean
+    public SecurityClientFallback securityClientFallback() {
+        return new SecurityClientFallback();
     }
 }

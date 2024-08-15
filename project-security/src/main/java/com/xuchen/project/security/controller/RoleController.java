@@ -1,11 +1,13 @@
 package com.xuchen.project.security.controller;
 
+import com.xuchen.project.model.common.validation.ValidationGroup;
 import com.xuchen.project.model.common.vo.ResponseResult;
 import com.xuchen.project.model.security.dto.RoleDto;
 import com.xuchen.project.model.security.dto.RolePermissionDto;
 import com.xuchen.project.model.security.pojo.Role;
 import com.xuchen.project.security.service.RoleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +26,7 @@ public class RoleController {
      * @return 执行结果
      */
     @PostMapping("/insert")
-    public ResponseResult<Long> insert(@RequestBody RoleDto roleDto) {
+    public ResponseResult<Long> insert(@RequestBody @Validated({ValidationGroup.Insert.class}) RoleDto roleDto) {
         return roleService.insert(roleDto);
     }
 
@@ -46,7 +48,7 @@ public class RoleController {
      * @return 执行结果
      */
     @PutMapping("/update")
-    public ResponseResult<Object> update(@RequestBody RoleDto roleDto) {
+    public ResponseResult<Object> update(@RequestBody @Validated({ValidationGroup.Update.class}) RoleDto roleDto) {
         return roleService.update(roleDto);
     }
 
@@ -68,7 +70,7 @@ public class RoleController {
      * @return 执行结果
      */
     @PostMapping("/bindingPermission")
-    public ResponseResult<Object> bindingPermission(@RequestBody RolePermissionDto rolePermissionDto) {
+    public ResponseResult<Object> bindingPermission(@RequestBody @Validated({ValidationGroup.Insert.class}) RolePermissionDto rolePermissionDto) {
         return roleService.bindingPermission(rolePermissionDto);
     }
 }

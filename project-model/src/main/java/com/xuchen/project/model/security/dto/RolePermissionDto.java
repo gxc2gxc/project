@@ -8,9 +8,9 @@ import javax.validation.constraints.NotNull;
 @Data
 public class RolePermissionDto {
 
-    @NotNull(message = "角色Id不能为空", groups = {ValidationGroup.Insert.class, ValidationGroup.Delete.class})
+    @NotNull(message = "角色Id不能为空", groups = {ValidationGroup.Insert.class})
     private Long roleId;
 
-    @NotNull(message = "权限Id不能为空", groups = {ValidationGroup.Insert.class, ValidationGroup.Delete.class})
+    @NotNull(message = "权限Id不能为空", groups = {ValidationGroup.Insert.class})
     private Long permissionId;
 }

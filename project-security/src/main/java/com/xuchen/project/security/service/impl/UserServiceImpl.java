@@ -231,6 +231,7 @@ public class UserServiceImpl implements UserService {
         UserVerifyVo userVerifyVo = new UserVerifyVo();
         userVerifyVo.setUserId(userId);
         userVerifyVo.setAuthorities(userMapper.selectAuthoritiesByUserId(userId));
+        log.info("Jwt令牌合法，返回用户权限信息：{}", userVerifyVo);
         return ResponseResult.success(userVerifyVo);
     }
 

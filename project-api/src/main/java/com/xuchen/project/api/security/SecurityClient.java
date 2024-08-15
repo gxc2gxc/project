@@ -1,12 +1,13 @@
-package com.xuchen.project.api;
+package com.xuchen.project.api.security;
 
+import com.xuchen.project.api.security.fallback.SecurityClientFallback;
 import com.xuchen.project.model.common.vo.ResponseResult;
 import com.xuchen.project.model.security.vo.UserVerifyVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient("project-security")
+@FeignClient(value = "project-security", fallback = SecurityClientFallback.class)
 public interface SecurityClient {
 
     /**

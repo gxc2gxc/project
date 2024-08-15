@@ -1,6 +1,7 @@
 package com.xuchen.project.security.controller;
 
-import com.xuchen.project.api.SecurityClient;
+import com.xuchen.project.api.security.SecurityClient;
+import com.xuchen.project.model.common.validation.ValidationGroup;
 import com.xuchen.project.model.common.vo.ResponseResult;
 import com.xuchen.project.model.security.dto.UserDto;
 import com.xuchen.project.model.security.dto.UserRoleDto;
@@ -9,6 +10,7 @@ import com.xuchen.project.model.security.vo.UserLoginVo;
 import com.xuchen.project.model.security.vo.UserVerifyVo;
 import com.xuchen.project.security.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +29,7 @@ public class UserController implements SecurityClient {
      * @return 执行结果
      */
     @PostMapping("/insert")
-    public ResponseResult<Long> insert(@RequestBody UserDto userDto) {
+    public ResponseResult<Long> insert(@RequestBody @Validated({ValidationGroup.Insert.class}) UserDto userDto) {
         return userService.insert(userDto);
     }
 
@@ -49,7 +51,7 @@ public class UserController implements SecurityClient {
      * @return 执行结果
      */
     @PutMapping("/update")
-    public ResponseResult<Object> update(@RequestBody UserDto userDto) {
+    public ResponseResult<Object> update(@RequestBody @Validated({ValidationGroup.Update.class}) UserDto userDto) {
         return userService.update(userDto);
     }
 

@@ -1,10 +1,12 @@
 package com.xuchen.project.security.controller;
 
+import com.xuchen.project.model.common.validation.ValidationGroup;
 import com.xuchen.project.model.common.vo.ResponseResult;
 import com.xuchen.project.model.security.dto.PermissionDto;
 import com.xuchen.project.model.security.pojo.Permission;
 import com.xuchen.project.security.service.PermissionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +25,7 @@ public class PermissionController {
      * @return 执行结果
      */
     @PostMapping("/insert")
-    public ResponseResult<Long> insert(@RequestBody PermissionDto permissionDto) {
+    public ResponseResult<Long> insert(@RequestBody @Validated({ValidationGroup.Insert.class}) PermissionDto permissionDto) {
         return permissionService.insert(permissionDto);
     }
 
@@ -45,7 +47,7 @@ public class PermissionController {
      * @return 执行结果
      */
     @PutMapping("/update")
-    public ResponseResult<Object> update(@RequestBody PermissionDto permissionDto) {
+    public ResponseResult<Object> update(@RequestBody @Validated({ValidationGroup.Update.class}) PermissionDto permissionDto) {
         return permissionService.update(permissionDto);
     }
 

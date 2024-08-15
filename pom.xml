@@ -20,6 +20,7 @@
         <module>project-api</module>
         <module>project-security</module>
         <module>project-gateway</module>
+        <module>project-delay</module>
     </modules>
 
     <properties>
@@ -57,6 +58,12 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>3.5.7</version>
+            </dependency>
+            <!--Redisson-->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>3.34.1</version>
             </dependency>
             <!--FastJSON-->
             <dependency>

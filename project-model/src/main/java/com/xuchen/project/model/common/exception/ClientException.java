@@ -6,6 +6,6 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ClientException extends RuntimeException{
+public class ClientException extends RuntimeException {
     private final ResponseStatus status;
 }

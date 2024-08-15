@@ -11,3 +11,4 @@ project:
       - /security/user/login=
       - /security/user/verify=
       - /security/user/logout=hasAdmin,hasCustom,hasMerchant
+      - /delay/work/**=forbidAll

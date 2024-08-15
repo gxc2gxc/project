@@ -5,6 +5,7 @@ import com.xuchen.project.common.util.UserContext;
 import com.xuchen.project.model.common.constant.HeaderConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ContextInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         // 获取请求头中的用户信息并保存到UserContext
         String userId = request.getHeader(HeaderConstant.INNER_HEADER_NAME);
         if (StringUtils.isNotBlank(userId)) {
@@ -26,8 +27,13 @@ public class ContextInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
         // 避免ThreadLocal内存泄漏问题
+        UserContext.removeUser();
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         UserContext.removeUser();
     }
 }

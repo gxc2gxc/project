@@ -20,3 +20,15 @@ spring:
           uri: lb://project-security
           predicates:
             - Path=/security/**
+        - id: project-delay
+          uri: lb://project-delay
+          predicates:
+            - Path=/delay/**
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 2000
+        readTimeout: 2000

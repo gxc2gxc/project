@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class RoleDto {
 
-    @NotNull(message = "角色Id不能为空", groups = {ValidationGroup.Update.class, ValidationGroup.Delete.class})
+    @NotNull(message = "角色Id不能为空", groups = {ValidationGroup.Update.class})
     private Long roleId;
 
     @NotBlank(message = "角色名不能为空", groups = {ValidationGroup.Insert.class})

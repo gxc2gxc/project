@@ -4,10 +4,12 @@ import com.xuchen.project.model.common.exception.ClientException;
 import com.xuchen.project.model.common.exception.ServerException;
 import com.xuchen.project.model.common.vo.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Slf4j
+@ControllerAdvice
 public class ExceptionHandler {
 
     @ResponseBody
@@ -26,7 +28,7 @@ public class ExceptionHandler {
 
     @ResponseBody
     @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
-    public ResponseResult<Object> exception(RuntimeException e) {
+    public ResponseResult<Object> exception(Exception e) {
         log.error("未知异常：{}", e.getMessage(), e);
         return ResponseResult.error();
     }

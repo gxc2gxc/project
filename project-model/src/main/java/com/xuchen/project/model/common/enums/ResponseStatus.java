@@ -23,10 +23,16 @@ public enum ResponseStatus {
     PERMISSION_NAME_EXISTED_EXCEPTION(609, "权限名已存在"),
     ROLE_NOT_EXIST_EXCEPTION(610, "角色不存在"),
     PERMISSION_NOT_EXIST_EXCEPTION(611, "权限不存在"),
+    PERMISSION_DENY_EXCEPTION(612, "用户没有访问权限"),
 
 
     // 7xx: 由于服务端原因导致执行失败
-    DEFAULT_SERVER_EXCEPTION(700, "默认服务端错误");
+    DEFAULT_SERVER_EXCEPTION(700, "默认服务端错误"),
+    INSERT_OR_UPDATE_DATABASE_EXCEPTION(701, "插入或更新数据库失败"),
+    INSERT_RABBITMQ_EXCEPTION(702, "插入消息队列失败"),
+    WORK_NOT_RUNNING_EXCEPTION(703, "任务未在执行"),
+    OTHER_USER_WORK_EXCEPTION(704, "不能操作其它用户的任务"),
+    CIRCUIT_BREAKER_EXCEPTION(705, "服务已熔断");
 
     private final int code;
 

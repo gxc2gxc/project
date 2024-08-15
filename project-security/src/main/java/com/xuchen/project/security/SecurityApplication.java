@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @MapperScan("com.xuchen.project.security.mapper")
-@EnableFeignClients(basePackages = "com.xuchen.project.api")
+@EnableFeignClients(basePackages = "com.xuchen.project.api.security")
 public class SecurityApplication {
     public static void main(String[] args) {
         SpringApplication.run(SecurityApplication.class, args);
