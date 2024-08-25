@@ -6,4 +6,5 @@ public class SecurityConstant {
 
     public final static String REDIS_TOKEN_PREFIX = "security_token_";
 
+    public final static String LOGIN_BLOOM_FILTER = "login.bloom.filter";
 }

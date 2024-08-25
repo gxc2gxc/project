@@ -30,7 +30,7 @@
             <artifactId>spring-cloud-dependencies</artifactId>
             <version>2021.0.3</version>
             <type>pom</type>
-            <scope>import</scope>
+            <scope>provided</scope>
         </dependency>
         <!--Spring Cloud Alibaba-->
         <dependency>
@@ -38,7 +38,7 @@
             <artifactId>spring-cloud-alibaba-starters</artifactId>
             <version>2021.0.4.0</version>
             <type>pom</type>
-            <scope>import</scope>
+            <scope>provided</scope>
         </dependency>
         <!--BootStrap-->
         <dependency>

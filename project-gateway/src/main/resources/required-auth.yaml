@@ -3,7 +3,7 @@ project:
     required-auth-urls:
       - /security/permission/**=hasAdmin
       - /security/role/**=hasAdmin
-      - /security/user/insert=hasAdmin
+      - /security/user/insert=
       - /security/user/delete=hasAdmin
       - /security/user/update=hasAdmin,hasCustom,hasMerchant
       - /security/user/select=hasAdmin

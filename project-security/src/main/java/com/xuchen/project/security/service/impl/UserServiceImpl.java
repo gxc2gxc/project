@@ -22,12 +22,15 @@ import com.xuchen.project.security.service.UserService;
 import com.xuchen.project.security.util.JwtTool;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RBloomFilter;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Slf4j
@@ -50,6 +53,20 @@ public class UserServiceImpl implements UserService {
 
     private final RedisTemplate<String, String> redisTemplate;
 
+    private final RedissonClient redissonClient;
+
+    private RBloomFilter<Object> bloomFilter;
+
+    /**
+     * 初始化布隆过滤器
+     */
+    @PostConstruct
+    public void init() {
+        // 用户登录布隆过滤器
+        bloomFilter = redissonClient.getBloomFilter(SecurityConstant.LOGIN_BLOOM_FILTER);
+        bloomFilter.tryInit(1000000L, 0.05);
+    }
+
     /**
      * 新增用户
      *
@@ -60,18 +77,25 @@ public class UserServiceImpl implements UserService {
     public ResponseResult<Long> insert(UserDto userDto) {
         log.info("新增用户：{}", userDto);
 
-        // 检查用户名是否已存在
-        User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, userDto.getUsername()));
-        if (user != null) {
-            throw new ClientException(ResponseStatus.USERNAME_EXISTED_EXCEPTION);
+        // 检查用户名是否不存在
+        boolean contains = bloomFilter.contains(userDto.getUsername());
+        if (contains) {
+            // 再次确认用户名是否已存在
+            User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, userDto.getUsername()));
+            if (user != null) {
+                throw new ClientException(ResponseStatus.USERNAME_EXISTED_EXCEPTION);
+            }
         }
 
         // 新增用户
-        user = new User();
+        User user = new User();
         BeanUtils.copyProperties(userDto, user);
         user.setStatus(1);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userMapper.insert(user);
+
+        // 将用户名保存到布隆过滤器
+        bloomFilter.add(user.getUsername());
 
         // 返回执行结果
         return ResponseResult.success(user.getUserId());
@@ -180,10 +204,16 @@ public class UserServiceImpl implements UserService {
     public ResponseResult<UserLoginVo> login(UserDto userDto) {
         log.info("用户登录：{}", userDto);
 
+        // 布隆过滤器
+        boolean contains = bloomFilter.contains(userDto.getUsername());
+        if (!contains) {
+            throw new ClientException(ResponseStatus.USER_NOT_EXIST_EXCEPTION);
+        }
+
         // 检查用户名是否存在
         User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, userDto.getUsername()));
         if (user == null) {
-            throw new ClientException(ResponseStatus.USERNAME_EXISTED_EXCEPTION);
+            throw new ClientException(ResponseStatus.USER_NOT_EXIST_EXCEPTION);
         }
 
         // 检查密码是否一致

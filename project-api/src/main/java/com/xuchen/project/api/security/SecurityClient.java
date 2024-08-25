@@ -17,5 +17,5 @@ public interface SecurityClient {
      * @return 执行结果
      */
     @GetMapping("/security/user/verify")
-    ResponseResult<UserVerifyVo> verify(@RequestParam("token") String token);
+    public ResponseResult<UserVerifyVo> verify(@RequestParam("token") String token);
 }
